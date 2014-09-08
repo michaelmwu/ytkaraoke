@@ -1,0 +1,128 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!--
+Youtube Karaoke
+c. 2011 Michael Wu
+-->
+<html>
+<head>
+<title>Youtube Karaoke</title>
+<script src="https://www.google.com/jsapi?key=ABQIAAAAM5ywvQ5p7xstC72M2lgZJRR0bW00JlxiDVC_NbwGxYPEjNQNShTHlog-xVasjv6_UP98vkfDfnfGcA" type="text/javascript"></script>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js" type="text/javascript"></script>
+<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.8.10/jquery-ui.min.js" type="text/javascript"></script>
+<script src="//ajax.googleapis.com/ajax/libs/swfobject/2.2/swfobject.js" type="text/javascript"></script>
+<script id="searchTemplate" type="text/x-jquery-tmpl">
+<div id="results">
+{{each(index,item) results}}
+{{if index<count}}
+<div id="search-${index}" class="searchItem"><a title="${item.title}" href="javascript:queueSearchVideo(${index})"><div class="title">${item.title}</div><img class="searchThumb" src="${item.thumbnail.sqDefault}"><img title="enqueue" class="enqueueImg" src="add-22.png"></a><a class="watchnowLink" title="watch now" href="javascript:watchSearchNow(${index})"><img src="play-22.png"></a></div>
+{{/if}}
+{{/each}}
+</div>
+</script>
+<script id="queueTemplate" type="text/x-jquery-tmpl">
+<div id="queue">
+{{each(index,item) queue}}
+<div id="queue-${index}"{{if index==0}} class="firstItem"{{/if}}><a href="javascript:watchNow(${index})" title="${item.title}" class="queueLink"><span>${item.title}</span><br><img src="${item.thumbnail.sqDefault}" class="queueThumb"></a><a class="removeLink" title="remove" href="javascript:queueRemove(${index})"><img src="dialog-close.png"></a></div>
+{{/each}}
+</div>
+<div id="queueDrop"></div>
+</script>
+<script id="managerTemplate" type="text/x-jquery-tmpl">
+<li id="manager-${index}" title="${item.title}" onClick="watchNow(${index});event.stopPropagation()"{{if index%2!=0}} class="odd"{{/if}}><span class="managerLink">${index+1}. ${item.title}</span><span title="remove" class="managerClose" onClick="queueRemove(${index});event.stopPropagation()">x</span></li>
+</script>
+<script src="karaoke.plugins.min.js" type="text/javascript"></script>
+<script src="jquery.ui.sortable.min.js" type="text/javascript"></script>
+<script src="karaoke.min.js" type="text/javascript"></script>
+<link rel="shortcut icon" href="favicon.ico" />
+<link rel="stylesheet" type="text/css" href="karaoke.min.css" />
+<!--[if gte IE 5]>  
+<link rel="stylesheet" type="text/css" href="karaoke-ie.css" />
+<![endif]-->
+</head>
+<body>
+<div id="videoCell">
+<div id="barCell"><div id="queueCell"><div id="queue"><div></div></div><div id="queueDrop"></div></div><div id="barMsg"></div>
+<div id="controlCell"><a href="javascript:prevVideo()"><img src="prev-24.png" /></a><a href="javascript:playPauseVideo()"><img id="controlPlayPause" src="pause-24.png" /></a><a href="javascript:forceNextVideo()"><img src="next-24.png" /></a></div>
+</div>
+<div id="innerVideoCell"></div>
+<div id="container"> 		
+  <div id="default" style="display: none;">
+    <div class="defaultNotify">
+      <h1>#{text}</h1> 
+    </div>
+  </div>
+</div>
+</div>
+<div id="manager" class="hiddenDialog ui-notify-message ui-notify-message-style ui-notify-click">
+  <span class="ui-notify-cross">x</span>
+  <h1>Queue Manager</h1>
+  
+  <p>Filter or drag &amp; drop queue items to reorder</p>
+  
+  <form id="managerForm"><input id="managerFilter" /></form>
+  
+  <p id="managerQueue">You have no items in the queue</p>
+</div>
+<div id="about" class="hiddenDialog ui-notify-message ui-notify-message-style ui-notify-click">
+  <span class="ui-notify-cross">x</span>
+  <h1><img src="ytkaraoke.png">Youtube Karaoke</h1>
+  
+  <p>
+  Because Youtube Leanback doesn't really have a queue feature.<br/>
+  Search keyword/URL/Video ID. Hint: use keywords <i>karaoke</i> or <i>lyrics</i>.
+  </p>
+  
+  <div id="winhelp">
+    <table><tr><td colSpan=2>Drag &amp; drop queue items to reorder</td></tr>
+    <tr><td>Alt+S</td><td>Toggle search</td></tr>
+    <tr><td>Alt+H/F1</td><td>Help</td></tr>
+    <tr><td>Alt+Q</td><td>Queue manager</td></tr>
+    <tr><td>&darr;&uarr;</td><td>Show/hide queue</td></tr>
+    <tr><td>PgUp/PgDn/Scroll</td><td>Prev/next results</td></tr>
+    <tr><td colSpan=2><table><tr><td>Prev</td><td>Play/Pause</td><td>Next</td></tr>
+                                <tr><td>Alt+X/&larr;</td><td>Alt+C/&#8679;+Space</td><td>Alt+V/&rarr;</td></table></td></tr></table>
+  </div>
+  
+  <div id="machelp">
+    <table><tr><td colSpan=2>Drag &amp; drop queue items to reorder</td></tr>
+    <tr><td>Ctrl+S</td><td>Toggle search</td></tr>
+    <tr><td>Ctrl+H</td><td>Help</td></tr>
+    <tr><td>Ctrl+Q</td><td>Queue manager</td></tr>
+    <tr><td>&darr;&uarr;</td><td>Show/hide queue</td></tr>
+    <tr><td>PgUp/PgDn/Scroll</td><td>Prev/next results</td></tr>
+    <tr><td>Fn+&uarr;&darr;</td><td></td></tr>
+    <tr><td>Ctrl+</td><td><table><tr><td>Prev</td><td>Play/Pause</td><td>Next</td></tr>
+                                <tr><td>&larr;/X</td><td>Space/C</td><td>&rarr;/V</td></table></td></tr></table>
+  </div>
+  
+  <p id="mobilehelp">
+    Youtube Karaoke may or may not work on mobile devices. Good luck!<br/>
+    See <a href="http://michaelmwu.blogspot.com/">my page</a> though
+  </p>
+</div>
+<div id="searchCell"><form id="searchForm"><div id="searchTextDiv"><input id="searchBox" autocomplete="off"/><input id="suggestBox" autocomplete="off"/><span id="searchText"></span><br/><span id="suggestText"></span></div></form><img id="popupLink" src="newwin.png"/><div id="resultsWrapper"><div id="results">
+<div class="searchItem" style="visibility: hidden"><a href="#"><div class="title">SD</div><img id="shinedays"/></a></div></div></div></div>
+<div id="funstuff">
+  <a id="aboutLink" href="#">About</a> &copy; <a href="http://michaelmwu.blogspot.com/" target="_blank">Michael Wu</a>
+  <div class="addthis_toolbox addthis_default_style">
+  <a class="addthis_button_preferred_1"></a>
+  <a class="addthis_button_preferred_2"></a>
+  <a class="addthis_button_preferred_3"></a>
+  <a class="addthis_button_preferred_4"></a>
+  <a class="addthis_button_compact"></a>
+  </div>
+  <script type="text/javascript">var addthis_config = {data_track_clickback:true,services_exclude:'print'};</script>
+  <script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#username=icyhandofcrap"></script>
+</div>
+<script type="text/javascript">
+var _gaq = _gaq || [];
+_gaq.push(['_setAccount', 'UA-22094510-1']);
+_gaq.push(['_trackPageview']);
+(function() {
+  var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+  ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+  var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+})();
+</script>
+</body>
+</html>

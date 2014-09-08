@@ -1,0 +1,72 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js" type="text/javascript"></script>
+<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.8.10/jquery-ui.min.js" type="text/javascript"></script>
+<script src="jquery.ui.sortable.min.js" type="text/javascript"></script>
+<style type="text/css">
+  img {width: 24px; height: 24px;}
+  .dragimg {display: inline-block; width: 24px; height: 24px;}
+  #one img {display: inline-block; margin-right: 10px;}
+  #two {position: absolute; left: 300px; top: 120px}
+  #three {position: absolute; left: 50px; top: 120px}
+  #three img {display: block; margin-top: 10px;}
+  #four {position: absolute; left: 600px; top: 120px}
+  #four li {list-style: none;}
+  #four img {display: block; margin-top: 10px;}
+  #five {position: absolute; left: 200px; top: 500px}
+  #five li {list-style: none; display: inline-block;}
+  #five img {display: block; margin-top: 10px;}
+</style>
+<script type="text/javascript">
+$().ready(run);
+
+function run() {
+  $('#one').sortable();
+  $('#three').sortable();
+  $('#four').sortable();
+  $('#five').sortable();
+  $('#two img').draggable({connectToSortable:'#one,#three,#four,#five', helper: 'clone', appendTo: 'body'});
+}
+</script>
+</head>
+<body>
+<div id="one">
+  <img src="stop-24.png" />
+  <img src="prev-24.png" />
+  <img src="next-24.png" />
+  <img src="prev-32.png" />
+  <img src="play-32.png" />
+</div>
+<div id="two">
+  <img class="dragimg" src="shinedays.jpg" />
+</div>
+<div id="three">
+  <img src="play-24.png" />
+  <img src="pause-24.png" />
+  <img src="stop-24.png" />
+  <img src="prev-24.png" />
+  <img src="next-24.png" />
+  <img src="prev-32.png" />
+  <img src="play-32.png" />
+</div>
+<ul id="four">
+  <li><img src="play-24.png" /></li>
+  <li><img src="pause-24.png" /></li>
+  <li><img src="stop-24.png" /></li>
+  <li><img src="prev-24.png" /></li>
+  <li><img src="next-24.png" /></li>
+  <li><img src="prev-32.png" /></li>
+  <li><img src="play-32.png" /></li>
+</ul>
+<ul id="five">
+  <li><img src="play-24.png" /></li>
+  <li><img src="pause-24.png" /></li>
+  <li><img src="stop-24.png" /></li>
+  <li><img src="prev-24.png" /></li>
+  <li><img src="next-24.png" /></li>
+  <li><img src="prev-32.png" /></li>
+  <li><img src="play-32.png" /></li>
+</ul>
+</body>
+</html>

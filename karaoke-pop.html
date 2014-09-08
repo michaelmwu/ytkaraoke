@@ -1,0 +1,81 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<title>Youtube Karaoke</title>
+<script src="https://www.google.com/jsapi?key=ABQIAAAAM5ywvQ5p7xstC72M2lgZJRR0bW00JlxiDVC_NbwGxYPEjNQNShTHlog-xVasjv6_UP98vkfDfnfGcA" type="text/javascript"></script>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js" type="text/javascript"></script>
+<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.8.10/jquery-ui.min.js" type="text/javascript"></script>
+<script id="searchTemplate" type="text/x-jquery-tmpl">
+<div id="results">
+{{each(index,item) results}}
+{{if index<count}}
+<div class="resultItem"><a title="${item.title}" href="javascript:queueSearchVideo(${index})"><img class="searchThumb" src="${item.thumbnail.sqDefault}" /><img title="enqueue" class="enqueueImg" src="add-22.png"></a><a class="watchnowLink" title="watch now" href="javascript:watchSearchNow(${index})"><img src="play-22.png"></a><div class="videoInfo"><p class="title"><a href="javascript:queueSearchVideo(${index})">${item.title}</a></p><p class="desc">{{html item.description.truncate(150).encodeHTML()}}</p><p class="meta">${addCommas(item.viewCount)} view{{if item.viewcount!=1}}s{{/if}}</p></div></div>
+{{/if}}
+{{/each}}
+</div>
+</script>
+<script id="managerTemplate" type="text/x-jquery-tmpl">
+<li id="manager-${index}" title="${item.title}" onClick="watchNow(${index});event.stopPropagation()"{{if index%2!=0}} class="odd"{{/if}}><span class="managerLink">${index+1}. ${item.title}</span><span title="remove" class="managerClose" onClick="queueRemove(${index});event.stopPropagation()">x</span></li>
+</script>
+<script id="playlistsTemplate" type="text/x-jquery-tmpl">
+{{each(index,item) playlists}}
+<tr title="enqueue ${item.description}" {{if index%2!=0}} class="odd"{{/if}}><td><a href="javascript:queuePlaylist('${index}')">${item.title}</a></td><td>${item.size}</td></tr>
+{{/each}}
+{{if playlists.length == 0}}<tr><td>You have no playlists</td><td></td></tr>{{/if}}
+</script>
+<script src="karaoke.plugins.min.js" type="text/javascript"></script>
+<script src="karaoke-pop.min.js" type="text/javascript"></script>
+<link rel="shortcut icon" href="favicon.ico" />
+<link rel="stylesheet" type="text/css" href="karaoke-pop.min.css" />
+</head>
+<body>
+<div id="tabs">
+  <div id="loginout"><a id="loginoutLink" href="#">Login</a></div>
+	<ul>
+		<li><a href="#tab-search">Search</a></li>
+		<li><a href="#tab-queue">Queue</a></li>
+		<li><a href="#tab-playlist">Playlists</a></li>
+	</ul>
+  <div id="tab-content">
+    <div id="tab-search">
+      <form id="searchForm"><div id="searchTextDiv"><input id="searchBox" autocomplete="off"/><input id="suggestBox" autocomplete="off"/><span id="searchText"></span><br/><span id="suggestText"></span></div></form>
+      <div id="resultsWrapper"><div id="results"><div class="resultItem" style="visibility: hidden"><a href="#"><img id="shinedays"/></a><div class="videoInfo"><p class="title"><a href="#">SD</a></p><p class="desc">Shine Days</p><p class="meta">9000 views</p></div></div></div></div>
+    </div>
+    <div id="tab-queue">
+      <p>Filter or drag &amp; drop queue items to reorder.</p>
+    
+      <form id="managerForm"><input id="managerFilter" /></form>
+      
+      <p id="managerQueue">You have no items in the queue</p>
+    </div>
+	  <div id="tab-playlist">
+    <form id="authForm" method="post"></form>
+    
+      <p>Playlists:</p>
+      
+      <form id="playlistForm" action="#"><input type="submit" value="Refresh" /></form>
+      
+      <table id="playlistTable">
+        <thead>
+          <tr><td id="namecol">Name</td><td id="sizecol">Size</td></tr>
+        </thead>
+        <tbody id="playlistResults">
+          <tr><td>You have no playlists</td><td></td></tr>
+        </tbody>
+      </table>
+	</div>
+  </div>
+</div>
+<div id="control"><a href="javascript:prevVideo()"><img src="prev-22.png" /><a href="javascript:playPauseVideo()"><img id="controlPlayPause" src="pause-22.png" /></a><a href="javascript:nextVideo()"><img src="next-22.png" /></a></div>
+<script type="text/javascript">
+var _gaq = _gaq || [];
+_gaq.push(['_setAccount', 'UA-22094510-1']);
+_gaq.push(['_trackPageview']);
+(function() {
+  var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+  ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+  var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+})();
+</script>
+</body>
+</html>

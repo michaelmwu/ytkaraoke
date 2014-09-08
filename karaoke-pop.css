@@ -1,0 +1,328 @@
+body {
+  overflow: hidden;
+}
+
+#loginout {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  font-size: 14px;
+}
+
+#tabs > ul {
+  margin: 0;
+  padding: 0;
+  white-space: nowrap;
+  background: #FBFBFB;
+  background: -moz-linear-gradient(90deg,#FEFEFE,#F6F6F6);
+  background: -webkit-gradient(linear,left top,left bottom,color-stop(0,#F6F6F6),color-stop(1,#FEFEFE));
+  height: 26px;
+  border-top: 1px solid #CCC;
+  border-bottom: 1px solid #CCC;
+  line-height: 26px;
+  vertical-align: middle;
+}
+
+#tabs > ul li {
+  width: 70px;
+  line-height: 18px;
+  display: inline-block;
+  height: 18px;
+  position: relative; 
+  list-style: none;
+  margin-right: 10px;
+  padding-left: 10px;
+  white-space: nowrap;
+  border-right: 1px solid #CCC;
+  font-size: 14px;
+}
+
+.ui-tabs .ui-tabs-nav li:last-child {
+  border-right: 0px !important;
+}
+
+#tabs{
+  position: absolute;
+  top: 5px;
+  bottom: 0;
+  left: 0px;
+  right: 0;
+  zoom: 1;
+}
+
+#tab-content {
+  margin: 5px 10px 0 10px;
+  height: 100%;
+}
+
+#tab-search {
+  height: 100%;
+}
+
+.ui-helper-reset { margin: 0; padding: 0; border: 0; outline: 0; line-height: 1.3; text-decoration: none; font-size: 100%; list-style: none; }
+.ui-helper-clearfix:after { content: "."; display: block; height: 0; clear: both; visibility: hidden; }
+.ui-helper-clearfix { display: inline-block; }
+/* required comment for clearfix to work in Opera \*/
+* html .ui-helper-clearfix { height:1%; }
+.ui-helper-clearfix { display:block; }
+
+.ui-tabs .ui-tabs-nav li.ui-tabs-selected { font-weight: bold; }
+.ui-tabs .ui-tabs-nav li.ui-tabs-selected a { color: #000000; text-decoration: none; }
+.ui-tabs .ui-tabs-nav li.ui-tabs-selected a, .ui-tabs .ui-tabs-nav li.ui-state-disabled a, .ui-tabs .ui-tabs-nav li.ui-state-processing a { cursor: text; }
+.ui-tabs .ui-tabs-nav li a, .ui-tabs.ui-tabs-collapsible .ui-tabs-nav li.ui-tabs-selected a { cursor: pointer; } /* first selector in group seems obsolete, but required to overcome bug in Opera applying cursor: text overall if defined elsewhere... */
+.ui-tabs .ui-tabs-panel {
+  display: block;
+  border-width: 0;
+  padding: 0;
+  background: none;
+}
+.ui-tabs .ui-tabs-hide {
+  position: absolute;
+  left: -2000px;
+}
+
+#searchForm input {
+  width: 400px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background: transparent;
+  margin: 0;
+  padding: 1px 0 1px 0;
+  border-width: 2px;
+  border-style: inset;
+}
+
+#searchForm {
+  width: 400px;
+  margin: 3px 3px 0 0;
+}
+
+#searchForm #searchTextDiv {
+  position: relative;
+  padding: 0;
+  width: 405px;
+  height: 28px;
+  overflow: hidden;
+  border-bottom: 1px solid #D3D3D3;
+}
+
+#searchForm #searchText {
+  position: absolute;
+  margin: 0;
+  padding: 1px 0 1px 1px;
+  width: 400px;
+  top: 2px;
+  left: 2px;
+  color: #FFF;
+  background-color: #FFF;
+  white-space: nowrap;
+  z-index: 2;
+}
+
+#searchBox {
+  z-index: 3;
+}
+
+#suggestBox {
+  color: silver;
+  z-index: 1;
+}
+
+.resultItem {
+  position: relative;
+  margin-top: 10px;
+  height: 95px;
+  clear: both;
+}
+
+.resultItem > a {
+  display: inline-block;
+  float: left;
+}
+
+.resultItem .watchnowLink {
+  position: absolute;
+  display: none;
+  left: 72px;
+  bottom: 8px;
+}
+
+.resultItem .searchThumb {
+  width: 120px;
+  height: 90px;
+}
+
+.resultItem .enqueueImg {
+  position: absolute;
+  display: none;
+  left: 95px;
+  bottom: 8px;
+}
+
+.videoInfo {
+  padding: 5px;
+  width: 400px;
+  margin-left: 125px;
+}
+
+.videoInfo p {
+  margin-top: 0;
+  margin-bottom: 0.5em;
+}
+
+.videoInfo p.title {
+  font-size: 13px;
+}
+
+.videoInfo p.desc {
+  color: #666666;
+
+  font-size: 11px;
+  line-height: 1.2;
+  overflow: hidden;
+}
+
+.videoInfo p.meta {
+  font-size: 11px;
+  font-weight: bold;
+}
+
+#tab-queue {
+  font-size: 13px;
+}
+
+#tab-queue p {
+  padding: 0;
+  margin: 0 0 10px 0;
+  white-space: nowrap;
+}
+
+#managerFilter {
+  display: none;
+}
+
+#managerQueue {
+  min-width: 300px;
+  max-width: 600px;
+  margin-top: 10px;
+  margin-right: 15px;
+  padding-left: 0px;
+  overflow: auto;
+}
+
+#managerQueue ul {
+  list-style-type: none;
+  margin: 5px 0 0 0;
+  padding: 2px 0 2px 0;
+}
+
+#managerQueue li {
+  display: list-item;
+  position: relative;
+  font-size: 13px;
+  height: 17px;
+  padding: 2px 0 2px 5px;
+  cursor: pointer;
+  color: #000;
+  background-color: #E5ECF9;
+  border-bottom: 1px solid #DDD;
+  border-top: 1px solid #DDD;
+  margin-bottom: -1px;
+}
+
+#managerQueue li a {
+}
+
+#managerQueue li .managerLink {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  position: absolute;
+  left: 5px;
+  right: 16px;
+}
+
+#managerQueue li .managerClose {
+  position: absolute;
+  right: 5px;
+}
+
+#managerQueue li:hover span {
+  text-decoration: underline;
+}
+
+#managerQueue li.odd {
+  background-color: #FFF;
+}
+
+#managerQueue li.odd a {
+}
+
+#tab-playlist {
+  font-size: 14px;
+}
+
+#playlistTable {
+  margin-top: 5px;
+  border-collapse: collapse;
+  border-spacing: 0px;
+}
+
+#playlistTable thead tr {
+  border-top: 0px;
+  font-weight: bold;
+  background-color: #FFF;
+}
+
+#playlistTable tr {
+  border-bottom: 1px solid #DDD;
+  border-top: 1px solid #DDD;
+  background-color: #E5ECF9;
+  margin-bottom: -1px;
+}
+
+#playlistTable tr.odd {
+  background-color: #FFF;
+}
+
+#namecol {
+  min-width: 300px;
+}
+
+#sizecol {
+  min-width: 50px;
+}
+
+#control {
+  position: fixed;
+  padding: 3px 3px 3px 1px;
+  bottom: 3px;
+  right: 3px;
+  background-color: #FFF;
+  -moz-border-radius:3px; -webkit-border-radius:3px; border-radius:3px;
+}
+
+#control a {
+  display: inline-block;
+  margin-left: 2px;
+}
+
+body { font-family: Sans-Serif; }
+
+a {
+  color: #0033CC;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+a:visited {
+  color: #0033CC;
+}
+
+a  img {
+  border: 0 none;
+}
